@@ -31,6 +31,7 @@ public class Producer {
 		// Emet des messages au fur et à mesure que l’utilisateur les saisit 
 		// Création d'une Connexion et d'une Session:
 		Connection connection = connectionFactory.createConnection();
+		
 	    Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 	    // Création d'un MessageProducer et d'un message de type Text
     	MessageProducer producer = session.createProducer(destination);
