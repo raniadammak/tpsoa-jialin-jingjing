@@ -29,16 +29,14 @@ public class Consumer {
         // Et affiche les messages au fur et à mesure de leur arrivée dans la queue 
     	// Création d'une Connexion et d'une Session
     	Connection connection = connectionFactory.createConnection();
+    	connection.start();
     	Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     	// Création d'un MessageConsumer
     	MessageConsumer consumer = session.createConsumer(destination);
     	// Réception des messages jusqu’à obtention d’un message non texte
     	while (true) {
     		Message m = consumer.receive(100000);
-    		System.out.println();
-    		System.out.println("instance ");
     	    if (m instanceof TextMessage) {
-    			System.out.println("instance ");
     			traiterMessage(m); // traiterMessage( m : TextMessage ) : void
     	    	}
     	    else {
@@ -50,8 +48,8 @@ public class Consumer {
 	} 
  
 	private void traiterMessage(Message m) {
-		System.out.println("Message traite ");
-    	System.out.println(m.toString());   
+    	System.out.println(m);   
+    	System.out.println("traité");  
 	}
        
     private void connect() throws Exception { 
