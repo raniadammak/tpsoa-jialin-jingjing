@@ -36,6 +36,7 @@ public class Producer {
     	MessageProducer producer = session.createProducer(destination);
     	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     	while( true ) {
+    		System.out.println();
     		System.out.println("Message?"); 
 	    	String messageInsere = reader.readLine(); 
 	    	if( messageInsere.equals("") ) {
