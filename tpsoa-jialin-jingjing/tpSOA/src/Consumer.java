@@ -2,6 +2,7 @@
 import javax.jms.Connection; 
 import javax.jms.ConnectionFactory; 
 import javax.jms.Destination; 
+import javax.jms.JMSException;
 import javax.jms.Message; 
 import javax.jms.MessageConsumer; 
 import javax.jms.Session; 
@@ -47,9 +48,9 @@ public class Consumer {
     	connection.close();
 	} 
  
-	private void traiterMessage(Message m) {
-    	System.out.println(m);   
-    	System.out.println("traité");  
+	private void traiterMessage(Message m) throws JMSException {
+		System.out.println(""); 
+    	System.out.println( ((TextMessage) m).getText() );    
 	}
        
     private void connect() throws Exception { 
