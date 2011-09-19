@@ -34,7 +34,8 @@ public class Consumer {
     	MessageConsumer consumer = session.createConsumer(destination);
     	// Réception des messages jusqu’à obtention d’un message non texte
     	while (true) {
-    		Message m = consumer.receive(10000);		   
+    		Message m = consumer.receive(100000);	
+    		System.out.println("instance ");
     	    if (m instanceof TextMessage) {
     			System.out.println("instance ");
     			traiterMessage(m); // traiterMessage( m : TextMessage ) : void
