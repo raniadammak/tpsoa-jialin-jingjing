@@ -49,7 +49,7 @@ public class Consumer {
 	} 
  
 	private void traiterMessage(Message m) throws JMSException {
-		System.out.println(""); 
+		System.out.println("Message reçu"); 
     	System.out.println( ((TextMessage) m).getText() );    
 	}
        
