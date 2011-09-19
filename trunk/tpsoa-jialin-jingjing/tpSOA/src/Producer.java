@@ -37,8 +37,8 @@ public class Producer {
     	MessageProducer producer = session.createProducer(destination);
     	BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     	while( true ) {
-    		System.out.println();
-    		System.out.println("Message?"); 
+    		System.out.println("\nDestination: " + destination.toString());
+    		System.out.println("Message à envoyer? (inserez rien pour quitter)"); 
 	    	String messageInsere = reader.readLine(); 
 	    	if( messageInsere.equals("") ) {
 	    		break;
@@ -46,7 +46,7 @@ public class Producer {
 	    	TextMessage message = session.createTextMessage(messageInsere);
 	    	// Envoi d'un message
 	    	producer.send(message); 
-	    	System.out.println("send TextMessage");
+	    	System.out.println("Message envoyé: " + messageInsere);
     		}
     	    // Fermeture de la connexion
     	    connection.close();

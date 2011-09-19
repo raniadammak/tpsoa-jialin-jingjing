@@ -31,11 +31,13 @@ public class Consumer {
     	// Création d'une Connexion et d'une Session
     	Connection connection = connectionFactory.createConnection();
     	connection.start();
+    	System.out.println("\nDestination: " + destination.toString()); 
     	Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
     	// Création d'un MessageConsumer
     	MessageConsumer consumer = session.createConsumer(destination);
     	// Réception des messages jusqu’à obtention d’un message non texte
     	while (true) {
+    		System.out.println("Attente du prochain message"); 
     		Message m = consumer.receive(100000);
     	    if (m instanceof TextMessage) {
     			traiterMessage(m); // traiterMessage( m : TextMessage ) : void
@@ -49,8 +51,7 @@ public class Consumer {
 	} 
  
 	private void traiterMessage(Message m) throws JMSException {
-		System.out.println("Message reçu"); 
-    	System.out.println( ((TextMessage) m).getText() );    
+		System.out.println("Message reçu: " + ((TextMessage) m).getText()); 
 	}
        
     private void connect() throws Exception { 
