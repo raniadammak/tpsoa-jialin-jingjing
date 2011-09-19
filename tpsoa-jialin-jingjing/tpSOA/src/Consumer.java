@@ -38,7 +38,7 @@ public class Consumer {
     	// Réception des messages jusqu’à obtention d’un message non texte
     	while (true) {
     		System.out.println("Attente du prochain message"); 
-    		Message m = consumer.receive(100000);
+    		Message m = consumer.receive(10000);
     	    if (m instanceof TextMessage) {
     			traiterMessage(m); // traiterMessage( m : TextMessage ) : void
     	    	}

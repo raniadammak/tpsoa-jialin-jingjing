@@ -50,7 +50,7 @@ public class Producer {
     		}
     	    // Fermeture de la connexion
     	    connection.close();
-    	    System.out.println("close");
+    	    System.out.println("\nclose");
 		} 
  
 	private void connect() throws Exception { 
