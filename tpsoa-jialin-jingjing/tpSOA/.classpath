@@ -5,5 +5,11 @@
 	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-activemq-5.5.0/activemq-all-5.5.0.jar"/>
 	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-activemq-5.5.0/lib/optional/slf4j-log4j12-1.5.11.jar"/>
 	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-activemq-5.5.0/lib/optional/log4j-1.2.14.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-camel-1.6.4/lib/camel-core-1.6.4.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-camel-1.6.4/lib/optional/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-camel-1.6.4/lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-camel-1.6.4/lib/spring-core-2.5.6.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/apache-camel-1.6.4/lib/camel-jms-1.6.4.jar"/>
+	<classpathentry kind="lib" path="E:/IFIPS/s9/SOA/spring.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
