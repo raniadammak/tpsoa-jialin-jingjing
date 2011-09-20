@@ -51,7 +51,7 @@ public class FournisseurService {
 		// Réception des messages jusqu’à obtention d’un message non texte
 		while (true) {
 			System.out.println("\nAttente de la prochaine requete...");
-			Message m = consumer.receive(10000);
+			Message m = consumer.receive(20000);
 			if (m instanceof TextMessage) {
 				exchangeMessage(); // traiterMessage( m : TextMessage ) : void
 			} else {
@@ -106,9 +106,7 @@ public class FournisseurService {
 							String produitId = ((TextMessage)m).getText();
 							System.out.println("\nProduit ID : " + produitId);
 							float prix = getPrix( produitId);
-							
 							sendMessages(Float.toString(prix));
-							
 						}
 
 					}).to("jms-test:fournisser.MyReponse");
