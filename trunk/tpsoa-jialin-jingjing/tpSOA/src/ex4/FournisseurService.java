@@ -4,7 +4,6 @@ import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
 import javax.jms.Message;
-import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
@@ -22,7 +21,6 @@ import org.apache.camel.impl.DefaultCamelContext;
 public class FournisseurService {
 
 	private ConnectionFactory connectionFactory;
-	private Destination destinationRequete;
 	private Destination destinationReponse;
 	private Session session;
 	private Connection connection;
@@ -55,7 +53,6 @@ public class FournisseurService {
 		// Lookup de la fabrique de connexion et de la destination
 		connectionFactory = (ConnectionFactory) jndiContext
 				.lookup("connectionFactory");
-		destinationRequete = (Destination) jndiContext.lookup("MyRequete");
 		destinationReponse = (Destination) jndiContext.lookup("MyReponse");
 		connection = connectionFactory.createConnection();
 		session = connection.createSession(false,
@@ -72,8 +69,7 @@ public class FournisseurService {
 	public void exchangeMessage() {
 		try {	
 			System.out.println("\nAttente de la prochaine requete...");
-			context.addRoutes(new RouteBuilder() {
-				
+			context.addRoutes(new RouteBuilder() {			
 				public void configure() throws Exception {
 					from("jms-test:fournisser.MyRequete").process(new Processor() {
 						public void process(Exchange e) throws Exception {

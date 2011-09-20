@@ -16,7 +16,7 @@ import javax.jms.TextMessage;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 
-public class Client1 {
+public class Client {
 
 	private ConnectionFactory connectionFactory;
 	private Destination destinationRequete;
@@ -26,7 +26,7 @@ public class Client1 {
 
 	public static void main(String[] args) {
 		try {
-			Client1 client = new Client1();
+			Client client = new Client();
 			client.connect();
 			client.sendMessages();
 		} catch (Throwable t) {
