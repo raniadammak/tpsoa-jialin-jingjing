@@ -64,11 +64,12 @@ public class Client1 {
 				System.in));
 		while (true) {
 			System.out
-					.println("\nTapper un text à reverser (QUIT pour arreter)");
+					.println("\nTapper un ID à chercher (QUIT pour arreter)");
 			String messageInsere = reader.readLine();
 			if (messageInsere.equals("QUIT")) {
 				break;
 			}
+			System.out.println( "ID: " + messageInsere);
 			TextMessage message = session.createTextMessage(messageInsere);
 			producer.send(message);
 			System.out.println("requête envoyé, ID =  "

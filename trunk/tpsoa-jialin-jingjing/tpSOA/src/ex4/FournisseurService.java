@@ -1,10 +1,5 @@
 package ex4;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
@@ -94,8 +89,7 @@ public class FournisseurService {
 	}
 
 	public void exchangeMessage() {
-		try {
-					
+		try {	
 			context.addRoutes(new RouteBuilder() {
 				
 				public void configure() throws Exception {
@@ -103,6 +97,8 @@ public class FournisseurService {
 						public void process(Exchange e) throws Exception {
 							JmsMessage textIn = (JmsMessage) e.getIn();
 							Message m = textIn.getJmsMessage();
+							String requete = ((TextMessage) m).getText();
+							System.out.println("requête obtenue :" + requete);
 							String produitId = ((TextMessage)m).getText();
 							System.out.println("\nProduit ID : " + produitId);
 							float prix = getPrix( produitId);
