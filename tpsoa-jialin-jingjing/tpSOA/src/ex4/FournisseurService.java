@@ -33,30 +33,11 @@ public class FournisseurService {
 
 			FournisseurService service = new FournisseurService();
 			service.connect();
-			service.waitForMessage();
+			service.exchangeMessage();
 
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
-	}
-
-	private void waitForMessage() throws Exception {
-		connection.start();
-		MessageConsumer consumer = session.createConsumer(destinationRequete);
-		// Réception des messages jusqu’à obtention d’un message non texte
-		while (true) {
-			System.out.println("\nAttente de la prochaine requete...");
-			Message m = consumer.receive(20000);
-			if (m instanceof TextMessage) {
-				exchangeMessage(); // traiterMessage( m : TextMessage ) : void
-			} else {
-				break;
-			}
-		}
-		// Fermeture de la connexion
-		session.close();
-		connection.close();
-		System.out.println("\nclose");
 	}
 
 	private void sendMessages(String reponse) throws Exception {
@@ -90,6 +71,7 @@ public class FournisseurService {
 
 	public void exchangeMessage() {
 		try {	
+			System.out.println("\nAttente de la prochaine requete...");
 			context.addRoutes(new RouteBuilder() {
 				
 				public void configure() throws Exception {
@@ -97,10 +79,8 @@ public class FournisseurService {
 						public void process(Exchange e) throws Exception {
 							JmsMessage textIn = (JmsMessage) e.getIn();
 							Message m = textIn.getJmsMessage();
-							String requete = ((TextMessage) m).getText();
-							System.out.println("requête obtenue :" + requete);
 							String produitId = ((TextMessage)m).getText();
-							System.out.println("\nProduit ID : " + produitId);
+							System.out.println("\nrequête obtenue, produit ID : " + produitId);
 							float prix = getPrix( produitId);
 							sendMessages(Float.toString(prix));
 						}
