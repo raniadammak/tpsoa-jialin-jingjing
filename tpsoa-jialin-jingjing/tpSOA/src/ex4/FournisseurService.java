@@ -31,6 +31,7 @@ public class FournisseurService {
 	private Destination destinationReponse;
 	private Session session;
 	private Connection connection;
+	CamelContext context;
 	
 	public static void main(String[] args) {
 		try {
@@ -83,6 +84,9 @@ public class FournisseurService {
 		connection = connectionFactory.createConnection();
 		session = connection.createSession(false,
 				Session.AUTO_ACKNOWLEDGE);
+		context = new DefaultCamelContext();
+		context.addComponent("jms-test", 
+				 JmsComponent.jmsComponentAutoAcknowledge(connectionFactory)); 
 	}
 	
 	public float getPrix(String idProduit) {
@@ -91,18 +95,15 @@ public class FournisseurService {
 
 	public void exchangeMessage() {
 		try {
-			CamelContext context = new DefaultCamelContext();
-			context.addComponent("jms-test", 
-					 JmsComponent.jmsComponentAutoAcknowledge(connectionFactory)); 
-			
+					
 			context.addRoutes(new RouteBuilder() {
 				
 				public void configure() throws Exception {
 					from("jms-test:fournisser.MyRequete").process(new Processor() {
 						public void process(Exchange e) throws Exception {
-							System.out.println("ffffffffffffffffffffff");
 							JmsMessage textIn = (JmsMessage) e.getIn();
-							String produitId = textIn;
+							Message m = textIn.getJmsMessage();
+							String produitId = ((TextMessage)m).getText();
 							System.out.println("\nProduit ID : " + produitId);
 							float prix = getPrix( produitId);
 							

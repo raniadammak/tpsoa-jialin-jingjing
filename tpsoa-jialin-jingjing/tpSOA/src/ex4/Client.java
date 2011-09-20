@@ -1,7 +1,6 @@
 package ex4;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.util.Scanner;
 
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
@@ -13,86 +12,77 @@ import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
 import javax.jms.TextMessage;
-import javax.naming.Context;
 import javax.naming.InitialContext;
 
-public class Client {
 
+public class Client implements MessageListener {
+	
 	private ConnectionFactory connectionFactory;
-	private Destination destinationRequete;
-	private Destination destinationReponse;
-	private Session session;
-	private Connection connection;
-
+	private Destination requestQueue;
+	private Destination responseQueue;
+	
 	public static void main(String[] args) {
 		try {
 			Client client = new Client();
 			client.connect();
-			client.sendMessages();
+			client.subscribe();
+			client.send();
 		} catch (Throwable t) {
 			t.printStackTrace();
 		}
 	}
-
-	private void waitForMessage() throws Exception {
-		connection.start();
-		MessageConsumer consumer = session.createConsumer(destinationReponse);
-		consumer.setMessageListener(new MessageListener() {
-			@Override
-			public void onMessage(Message m) {
-				TextMessage textMsg = (TextMessage) m;
-				try {
-					traiterMessage(textMsg);
-				} catch (JMSException e) {
-					e.printStackTrace();
-				}
-			}
-
-		});
-
+	
+	private void subscribe() throws Exception {
+		Connection conn = connectionFactory.createConnection();
+		conn.start();
+		Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		MessageConsumer mc = session.createConsumer(responseQueue);
+		mc.setMessageListener(this);
 	}
 
-	private void traiterMessage(TextMessage m) throws JMSException {
-		System.out.println("réponse obtenue, requête ID: "
-				+ m.getJMSMessageID() + "---> " + m.getText());
-	}
-
-	private void sendMessages() throws Exception {
-
-		MessageProducer producer = session.createProducer(destinationRequete);
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				System.in));
-		while (true) {
-			System.out
-					.println("\nTapper un text à reverser (QUIT pour arreter)");
-			String messageInsere = reader.readLine();
-			if (messageInsere.equals("QUIT")) {
+	private void send() throws Exception {
+		Connection conn = connectionFactory.createConnection();
+		conn.start();
+		Session session = conn.createSession(false, Session.AUTO_ACKNOWLEDGE);
+		MessageProducer mProd = session.createProducer(requestQueue);
+		
+		Scanner scanner = new Scanner(System.in);
+		String msg;
+		
+		while(true) {
+			System.out.println("\nTaper le texte à inverser (QUIT pour arreter) :");
+			msg = scanner.nextLine();
+			
+			if (msg.equals("QUIT")) {
 				break;
 			}
-			TextMessage message = session.createTextMessage(messageInsere);
-			producer.send(message);
-			System.out.println("requête envoyé, ID =  "
-					+ message.getJMSMessageID());
-			waitForMessage();
+			
+			TextMessage tm = session.createTextMessage(msg);
+			mProd.send(tm);
+			
+			System.out.println(" \n>> Requête envoyée,  ID = " + tm.getJMSMessageID());
 		}
-		// Fermeture de la connexion
-		session.close();
-		connection.close();
-		System.out.println("\nclose");
+	}
+	
+	
+	private void connect() throws Exception {
+		InitialContext ic = new InitialContext();
+		connectionFactory = (ConnectionFactory) ic.lookup("connectionFactory");
+		requestQueue = (Destination) ic.lookup("MyRequete");
+		responseQueue = (Destination) ic.lookup("MyReponse");
 	}
 
-	private void connect() throws Exception {
-		// Initialise les attributs connectionFactory et destination.
-		// Création d'un contexte JNDI
-		Context jndiContext = new InitialContext();
-		// Lookup de la fabrique de connexion et de la destination
-		connectionFactory = (ConnectionFactory) jndiContext
-				.lookup("connectionFactory");
-		destinationRequete = (Destination) jndiContext.lookup("MyRequete");
-		destinationReponse = (Destination) jndiContext.lookup("MyReponse");
-		connection = connectionFactory.createConnection();
-
-		session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+	@Override
+	public void onMessage(Message msg)  {
+		if (msg instanceof TextMessage) {
+			TextMessage tm = (TextMessage) msg;
+			try {
+				System.out.println("\n>> Réponse obtenue, requête " + msg.getJMSCorrelationID() + " --> " + tm.getText());
+			} catch (JMSException e) {
+				e.printStackTrace();
+			}
+		}
+		
 	}
 
 }
