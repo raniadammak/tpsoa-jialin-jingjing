@@ -21,6 +21,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.jms.JmsComponent;
+import org.apache.camel.component.jms.JmsMessage;
 import org.apache.camel.impl.DefaultCamelContext;
 
 public class FournisseurService {
@@ -100,8 +101,8 @@ public class FournisseurService {
 					from("jms-test:fournisser.MyRequete").process(new Processor() {
 						public void process(Exchange e) throws Exception {
 							System.out.println("ffffffffffffffffffffff");
-							TextMessage textIn = (TextMessage) e.getIn();
-							String produitId = textIn.getText();
+							JmsMessage textIn = (JmsMessage) e.getIn();
+							String produitId = textIn;
 							System.out.println("\nProduit ID : " + produitId);
 							float prix = getPrix( produitId);
 							
