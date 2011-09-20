@@ -1,3 +1,4 @@
+package ex1;
 
 import javax.jms.Connection; 
 import javax.jms.ConnectionFactory; 
