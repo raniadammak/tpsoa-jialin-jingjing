@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entreprise xmlns="http://www.leuville.com/entreprise"
+			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			xsi:schemaLocation="http://www.leuville.com/entreprise schema_entreprise.xsd">
+	<raison-sociale>
+	  <nom>Leuville Objects</nom>
+	  <adresse>3 rue de la Porte de Buc</adresse>
+	  <forme>SARL</forme>
+	</raison-sociale>
+	<departements>
+	  <departement>
+	    <intitule>Formation</intitule>
+	    <responsable>Philippe Hubert</responsable>
+	    <adjoint>Richard Lecomte</adjoint>
+	    <membres>
+	      <nom>Richard Lecomte</nom>
+	      <nom>Phillipe Hubert</nom>
+	    </membres>
+	  </departement>
+	  <departement>
+	    <intitule>Commercial</intitule>
+	    <responsable>Damien de Verneuil</responsable>
+	    <membres>
+	      <nom>Gaston Lagaffe</nom>
+	    </membres>
+	  </departement>
+	</departements>
+</entreprise>

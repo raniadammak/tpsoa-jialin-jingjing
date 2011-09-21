@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2000/10/XMLSchema">
+
+<xsd:element name="nom" type="xsd:string"/>
+<xsd:element name="adresse" type="xsd:string"/>
+<xsd:element name="forme" type="xsd:string"/>
+<xsd:element name="intitule" type="xsd:string"/>
+<xsd:element name="responsable" type="xsd:string"/>
+<xsd:element name="adjoint" type="xsd:string"/>
+
+<xsd:element name="raison-sociale" type="raison-sociale"/>
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="nom"/>
+			<xsd:element ref="adresse"/>
+			<xsd:element ref="forme"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name="membres" type="membres"/>
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="nom" minOccurs="1" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name="departement" type="departement"/>
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="intitule"/>
+			<xsd:element ref="responsable"/>
+			<xsd:element ref="adjoint" minOccurs="0"/>
+			<xsd:element ref="membres"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name="departements" type="departements"/>
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="departement" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+<xsd:element name="entreprise" type="tns:entreprise"/>
+	<xsd:complexType>
+		<xsd:sequence>
+			<xsd:element ref="raison-sociale"/>
+			<xsd:element ref="departements" />
+		</xsd:sequence>
+	</xsd:complexType>
+</xsd:element>
+
+</xsd:schema>
