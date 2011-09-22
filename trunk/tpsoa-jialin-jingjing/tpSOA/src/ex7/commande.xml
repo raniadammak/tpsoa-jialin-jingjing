@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commande 
+	xmlns:tns="http://www.leuville.com/commande" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.leuville.com/commande commande.xsd ">
+  <reference>CMD0123456789</reference>
+  <date>2009-03-02T15:39:00</date>
+  <lignes-produit>
+    <ligne-produit>
+      <reference-produit>P1</reference-produit>
+      <quantite>2</quantite>
+    </ligne-produit>
+     <ligne-produit>
+      <reference-produit>P2</reference-produit>
+      <quantite>5</quantite>
+    </ligne-produit>
+  </lignes-produit>
+</commande>
