@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://www.leuville.com/fournisseurService/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	name="fournisseurService"
+	targetNamespace="http://www.leuville.com/fournisseurService/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://www.leuville.com/fournisseurService/" elementFormDefault="qualified" >
+      <xsd:element name="getPrix">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="code-produit" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="getPrixResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="prix" type="xsd:float" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="commander">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="commande">
+              <xsd:complexType>
+                <xsd:sequence>
+                  <xsd:element name="ligne-produit" minOccurs="1" maxOccurs="unbounded">
+                    <xsd:complexType>
+                      <xsd:sequence>
+                        <xsd:element name="code-produit" type="xsd:string" />
+                        <xsd:element name="quantite" type="xsd:int" />
+                      </xsd:sequence>
+                    </xsd:complexType>
+                  </xsd:element>
+                </xsd:sequence>
+              </xsd:complexType>
+            </xsd:element>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="commanderResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="commanderResult" type="xsd:boolean" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getPrixRequest">
+    <wsdl:part element="tns:getPrix" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="getPrixResponse">
+    <wsdl:part element="tns:getPrixResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="commanderRequest">
+    <wsdl:part element="tns:commander" name="parameters" />
+  </wsdl:message>
+  <wsdl:message name="commanderResponse">
+    <wsdl:part element="tns:commanderResponse" name="parameters" />
+  </wsdl:message>
+  <wsdl:portType name="fournisseurService">
+    <wsdl:operation name="getPrix">
+      <wsdl:input message="tns:getPrixRequest" />
+      <wsdl:output message="tns:getPrixResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="commander">
+      <wsdl:input message="tns:commanderRequest" />
+      <wsdl:output message="tns:commanderResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="fournisseurServiceSOAP" type="tns:fournisseurService">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="getPrix">
+      <soap:operation soapAction="http://www.leuville.com/fournisseurService/getPrix" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="commander">
+      <soap:operation	soapAction="http://www.leuville.com/fournisseurService/commander" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="fournisseurService">
+    <wsdl:port binding="tns:fournisseurServiceSOAP" name="fournisseurServiceSOAP">
+      <soap:address location="http://localhost:8090/services/fournisseurService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
